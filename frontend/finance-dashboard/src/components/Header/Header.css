@@ -1,0 +1,39 @@
+ .header {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  padding: 15px 25px;
+  border-radius: 12px;
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Right side */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Dropdown */
+.header select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* Avatar */
+.avatar {
+  background: white;
+  color: #6366f1;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
