@@ -19,7 +19,7 @@ function Header({ role, setRole }) {
         </select>
 
         <div className="profile">
-          <span className="avatar">A</span>
+          <span className="avatar">👤</span>
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Cell } from "recharts";
 import "./Charts.css";
 import {
   LineChart,
@@ -9,135 +8,170 @@ import {
   Tooltip,
   PieChart,
   Pie,
-  Legend
+  Cell,
+  Legend,
+  ResponsiveContainer,
+  CartesianGrid
 } from "recharts";
-const COLORS = [
-  "#4f46e5", // indigo
-  "#22c55e", // green
-  "#ef4444", // red
-  "#f59e0b", // yellow
-  "#06b6d4", // cyan
-  "#a855f7", // purple
-  "#ec4899", // pink
-  "#10b981"  // emerald
-];
+
+const COLORS = ["#4f46e5", "#22c55e", "#ef4444", "#f59e0b"];
 
 function Charts({ data }) {
   const [view, setView] = useState("daily");
 
-  // 📊 GROUP DATA (daily / monthly / yearly)
+  // ✅ GROUP DATA FOR LINE CHART
   const grouped = {};
 
   data.forEach((t) => {
     const dateObj = new Date(t.date);
     let key;
 
-    if (view === "daily") {
-      key = t.date;
-    } else if (view === "monthly") {
+    if (view === "daily") key = t.date;
+    else if (view === "monthly")
       key = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}`;
-    } else {
-      key = `${dateObj.getFullYear()}`;
-    }
+    else key = `${dateObj.getFullYear()}`;
 
     if (!grouped[key]) {
       grouped[key] = { name: key, income: 0, expense: 0 };
     }
 
-    if (t.type === "Income") {
-      grouped[key].income += t.amount;
-    } else {
-      grouped[key].expense += t.amount;
-    }
+    if (t.type === "Income") grouped[key].income += t.amount;
+    else grouped[key].expense += t.amount;
   });
 
   const lineData = Object.values(grouped);
 
-//   // 🥧 PIE DATA (category wise)
-//   const categoryMap = {};
-//   data.forEach((t) => {
-//     categoryMap[t.category] =
-//       (categoryMap[t.category] || 0) + t.amount;
-//   });
+  // ✅ PIE DATA
+  const expenseData = data.filter((t) => t.type === "Expense");
 
-//   const pieData = Object.keys(categoryMap).map((key) => ({
-//     name: key,
-//     value: categoryMap[key]
-//   }));
-// ✅ FILTER ONLY EXPENSES
-const expenseData = data.filter((t) => t.type === "Expense");
+  const categoryMap = {};
+  expenseData.forEach((t) => {
+    categoryMap[t.category] =
+      (categoryMap[t.category] || 0) + t.amount;
+  });
 
-// ✅ GROUP BY CATEGORY
-const categoryMap = {};
+  const pieData = Object.keys(categoryMap).map((key) => ({
+    name: key,
+    value: categoryMap[key]
+  }));
 
-expenseData.forEach((t) => {
-  categoryMap[t.category] =
-    (categoryMap[t.category] || 0) + t.amount;
-});
+  // ✅ HIGHEST CATEGORY
+  const highest =
+    pieData.length > 0
+      ? pieData.reduce((a, b) => (a.value > b.value ? a : b))
+      : { name: "-", value: 0 };
 
-// ✅ CONVERT TO PIE FORMAT
-const pieData = Object.keys(categoryMap).map((key) => ({
-  name: key,
-  value: categoryMap[key]
-}));
   return (
     <div className="charts-container">
 
-      {/* 📊 LINE CHART */}
+      {/* ================= LINE CHART ================= */}
       <div className="chart-card">
         <div className="chart-header">
-          <h4>Income vs Expense</h4>
-
-          <div className="chart-buttons">
-            <button onClick={() => setView("daily")}>Daily</button>
-            <button onClick={() => setView("monthly")}>Monthly</button>
-            <button onClick={() => setView("yearly")}>Yearly</button>
-          </div>
-        </div>
-           <div className="line-wrapper">
-        <LineChart width={500} height={250} data={lineData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-
-          <Line
-            type="monotone"
-            dataKey="income"
-            stroke="#22c55e"
-            strokeWidth={3}
-          />
-          <Line
-            type="monotone"
-            dataKey="expense"
-            stroke="#ef4444"
-            strokeWidth={3}
-          />
-        </LineChart>
-      </div>
-      </div>
-
-      {/* 🥧 PIE CHART */}
-      <div className="chart-card">
-        <h4>Spending Breakdown</h4>
+          <h4>📈 Income vs Expense</h4>
         
-  <div className="pie-wrapper">
+        <div className="chart-buttons">
+  <button 
+    className={view === "daily" ? "active" : ""}
+    onClick={() => setView("daily")}
+  >
+    Daily
+  </button>
 
-        <PieChart width={300} height={250}>
-          <Pie
-            data={pieData}
-            dataKey="value"
-            nameKey="name"
-            outerRadius={100}
-          >{pieData.map((entry, index) => (
-    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-  ))}
-</Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
+  <button 
+    className={view === "monthly" ? "active" : ""}
+    onClick={() => setView("monthly")}
+  >
+    Monthly
+  </button>
+
+  <button 
+    className={view === "yearly" ? "active" : ""}
+    onClick={() => setView("yearly")}
+  >
+    Yearly
+  </button>
+</div>
+</div>
+
+        
+
+        <ResponsiveContainer width="100%" height={280}>
+          <LineChart data={lineData}
+           margin={{ top: 20, right: 20, left: 0, bottom: 0 }} >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+
+            <Line type="monotone" dataKey="income" stroke="#22c55e" strokeWidth={3} />
+            <Line type="monotone" dataKey="expense" stroke="#ef4444" strokeWidth={3} />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
-     </div>
+
+      {/* ================= PIE + INSIGHTS ================= */}
+      <div className="chart-card">
+        <h4>🥧Spending Breakdown</h4>
+
+        <div className="pie-insights">
+
+          {/* LEFT TEXT */}
+          <div className="pie-text">
+            <p className="label">👜 Highest spending category</p>
+            <h3>{highest.name} at ₹ {highest.value}</h3>
+
+            <p className="label">📊 Total transactions</p>
+            <h3>{data.length}</h3>
+          </div>
+
+          {/* RIGHT PIE */}
+          <div className="pie-chart">
+            <ResponsiveContainer width="100%" height={280}>
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius="90%"
+                  labelLine={false}
+                  label={({ cx, cy, midAngle, outerRadius, percent }) => {
+                    const RADIAN = Math.PI / 180;
+                    const radius = outerRadius * 0.6;
+                    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+                    return (
+                      <text
+                        x={x}
+                        y={y}
+                        fill="#fff"
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                        fontSize={14}
+                        fontWeight="bold"
+                      >
+                        {(percent * 100).toFixed(1)}%
+                      </text>
+                    );
+                  }}
+                >
+                  {pieData.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   );
 }

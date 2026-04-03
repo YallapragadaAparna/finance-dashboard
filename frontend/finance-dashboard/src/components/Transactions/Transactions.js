@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Transactions.css";
 
-function Transactions({ data, role, filter, setFilter, addTransaction }) {
+function Transactions({ data, role, filter, setFilter, addTransaction, setTransactions }) {
   const [search, setSearch] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
 
   const [form, setForm] = useState({
     date: "",
@@ -11,29 +12,59 @@ function Transactions({ data, role, filter, setFilter, addTransaction }) {
     type: "Income"
   });
 
-  const filtered = data.filter((t) =>
-    t.category.toLowerCase().includes(search.toLowerCase())
-  );
+  // ✅ Filter
+  const filtered = data
+    .filter((t) =>
+      t.category.toLowerCase().includes(search.toLowerCase())
+    )
+    .filter((t) => (filter === "All" ? true : t.type === filter));
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // ✅ Add / Update
   const handleAdd = () => {
     if (!form.date || !form.amount || !form.category) {
       alert("Please fill all fields");
       return;
     }
 
-    addTransaction(form);
+    const newTransaction = {
+      ...form,
+      amount: Number(form.amount)
+    };
 
-    // reset form
+    if (editIndex !== null) {
+      // 🔁 Update
+      const updated = [...data];
+      updated[editIndex] = newTransaction;
+      setTransactions(updated);
+      setEditIndex(null);
+    } else {
+      // ➕ Add
+      addTransaction(newTransaction);
+    }
+
+    // Reset form
     setForm({
       date: "",
       amount: "",
       category: "",
       type: "Income"
     });
+  };
+
+  // ❌ Delete
+  const handleDelete = (index) => {
+    const updated = data.filter((_, i) => i !== index);
+    setTransactions(updated);
+  };
+
+  // ✏️ Edit
+  const handleEdit = (index) => {
+    setForm(data[index]);
+    setEditIndex(index);
   };
 
   return (
@@ -58,12 +89,7 @@ function Transactions({ data, role, filter, setFilter, addTransaction }) {
       {/* Admin Form */}
       {role === "Admin" && (
         <div className="form">
-          <input
-            type="date"
-            name="date"
-            value={form.date}
-            onChange={handleChange}
-          />
+          <input type="date" name="date" value={form.date} onChange={handleChange} />
 
           <input
             type="number"
@@ -86,7 +112,9 @@ function Transactions({ data, role, filter, setFilter, addTransaction }) {
             <option value="Expense">Expense</option>
           </select>
 
-          <button onClick={handleAdd}>Add</button>
+          <button onClick={handleAdd}>
+            {editIndex !== null ? " 🔁 Update" : "✚  Add"}
+          </button>
         </div>
       )}
 
@@ -101,8 +129,10 @@ function Transactions({ data, role, filter, setFilter, addTransaction }) {
               <th>Amount</th>
               <th>Category</th>
               <th>Type</th>
+              {role === "Admin" && <th>Actions</th>}
             </tr>
           </thead>
+
           <tbody>
             {filtered.map((t, i) => (
               <tr key={i}>
@@ -110,13 +140,21 @@ function Transactions({ data, role, filter, setFilter, addTransaction }) {
                 <td>₹ {t.amount}</td>
                 <td>{t.category}</td>
 
-                <td
-                  style={{
-                    color: t.type === "Income" ? "green" : "red"
-                  }}
-                >
+                {/* <td style={{ color: t.type === "Income" ? "green" : "red" }}>
                   {t.type}
-                </td>
+                </td> */}
+                <td>
+  <span className={t.type === "Income" ? "income" : "expense"}>
+    {t.type}
+  </span>
+</td>
+
+                {role === "Admin" && (
+                  <td>
+                    <button onClick={() => handleEdit(i)}>✏️ Edit</button>
+                    <button onClick={() => handleDelete(i)}>🗑️ Delete</button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
