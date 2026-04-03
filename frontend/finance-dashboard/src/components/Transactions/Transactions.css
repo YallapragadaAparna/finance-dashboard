@@ -20,9 +20,29 @@
   gap: 10px;
   margin-bottom: 15px;
     font-size: 15px;     /* 🔥 increased */
-
+justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+.left-controls {
+  display: flex;
+  gap: 10px;
 }
 
+.export-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
 .controls input,
 .controls select {
   padding: 10px 12px;
@@ -77,7 +97,7 @@ thead {
 }
 
 th {
-  padding: 12px;
+  padding: 14px;
   font-size: 15px;
   font-weight: 600;
 
@@ -92,7 +112,7 @@ td {
 
 /* ROW HOVER */
 tbody tr:hover {
-  background: #f8fafc;
+  background-color: #f9fafb;
 }
 
 /* TYPE COLORS */

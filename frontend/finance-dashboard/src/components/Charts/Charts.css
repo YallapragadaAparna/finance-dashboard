@@ -34,8 +34,12 @@
   border-radius: 6px;
   cursor: pointer;
   background: #e5e7eb;
+  margin-right: 8px;
 }
-
+.chart-buttons .active {
+  background: #6366f1;
+  color: white;
+}
 /* Container */
 .chart-buttons {
   display: flex;

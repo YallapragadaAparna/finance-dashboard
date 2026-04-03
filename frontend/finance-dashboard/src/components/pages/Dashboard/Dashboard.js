@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "./Dashboard.css";
 
 import Header from "../../Header/Header";
@@ -12,13 +12,22 @@ function Dashboard() {
   const [role, setRole] = useState("Viewer");
   const [filter, setFilter] = useState("All");
 
-  const [transactions, setTransactions] = useState([
+  const [transactions, setTransactions] = useState(()=>{
+  const saved = localStorage.getItem("transactions");
+    return saved
+      ? JSON.parse(saved)
+      : [
     { date: "2026-04-01", amount: 500, category: "Food", type: "Expense" },
     { date: "2026-04-02", amount: 2000, category: "Salary", type: "Income" },
     { date: "2026-05-03", amount: 800, category: "Travel", type: "Expense" },
     { date: "2027-05-07", amount:1000,  category:"Rent",type:"Expense"},
     { date: "2027-06-10", amount:1500, category:"Groceries",type:"Income"}
-  ]);
+  ];
+});
+  // 💾 LOCAL STORAGE (SAVE)
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
   // ✅ Calculations
   const income = transactions
@@ -44,12 +53,34 @@ function Dashboard() {
 
       <Header role={role} setRole={setRole} />
 
-      {/* SUMMARY CARDS */}
+      {/* SUMMARY CARDS *
       <div className="cards">
         <SummaryCard title="Balance" amount={income - expense} />
         <SummaryCard title="Income" amount={income} />
         <SummaryCard title="Expenses" amount={expense} />
-      </div>
+      </div>*/}
+      {/* SUMMARY CARDS */}
+<div className="cards">
+
+  <SummaryCard
+    className="card balance-card"
+    title="Balance"
+    amount={income - expense}
+  />
+
+  <SummaryCard
+    className="card income-card"
+    title="Income"
+    amount={income}
+  />
+
+  <SummaryCard
+    className="card expense-card"
+    title="Expenses"
+    amount={expense}
+  />
+
+</div>
 
       {/* CHART + INSIGHTS */}
       <div className="charts-row">

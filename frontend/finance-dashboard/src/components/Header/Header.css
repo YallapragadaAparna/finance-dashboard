@@ -43,6 +43,19 @@
   justify-content: center;
   font-weight: bold;
 }
+/* DARK MODE BUTTON */
+.header button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.header button:hover {
+  opacity: 0.9;
+}
 /* TABLET */
 @media (max-width: 768px) {
   .header {
