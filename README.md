@@ -1,5 +1,5 @@
 # finance-dashboard
-LiveLink: finance-dashboard-h9wgt9tw5-yallapragadaaparnas-projects.vercel.app
+LiveLink: https://finance-dashboard-88wnylzur-yallapragadaaparnas-projects.vercel.app
 #### 📊 Finance Dashboard
 ##### 📌 Overview
 
