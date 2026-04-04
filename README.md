@@ -5,12 +5,12 @@ LiveLink: https://finance-dashboard-zio1.onrender.com
 
 ##### This project is a Finance Dashboard UI built to track and manage financial data such as income, expenses, and transactions.
 
-###### The main goal of this project is to demonstrate frontend development skills, including UI design, component structure, and data handling without relying on a backend.
+##### The main goal of this project is to demonstrate frontend development skills, including UI design, component structure, and data handling without relying on a backend.
 
-###### The dashboard provides a clear visual representation of financial data using charts and interactive elements, making it easy for users to understand their financial status.
+##### The dashboard provides a clear visual representation of financial data using charts and interactive elements, making it easy for users to understand their financial status.
 
 #### 🚀 Features
-###### ✅ Core Features
+##### ✅ Core Features
 ###### Add and manage transactions (Income & Expenses)
 ###### 📊 Visual representation using:
 ###### Line Chart (financial trends)
