@@ -1,0 +1,88 @@
+ .summary-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+
+  display: flex;
+  flex-direction: column;   /* stack header + amount */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  min-width: 200px;
+}
+
+/* ICON + TITLE (same row) */
+.card-header {
+  display: flex;
+  flex-direction: row;      /* 🔥 keep in one line */
+  align-items: center;
+  justify-content: center;  /* center horizontally */
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* ICON */
+.icon {
+  font-size: 22px;
+}
+
+/* COLORS */
+.income-icon {
+  color: #22c55e;
+}
+
+.expense-icon {
+  color: #ef4444;
+}
+
+.balance-icon {
+  color: #6366f1;
+}
+
+/* AMOUNT */
+.summary-card h2 {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: bold;
+}
+/* RESPONSIVE CARDS */
+@media (max-width: 900px) {
+  .summary-card {
+    max-width: 95%;     
+      padding: 20px;
+  }
+
+  .card-header {
+    gap: 6px;
+  }
+
+  .summary-card h2 {
+    font-size: 20px;
+  }
+
+  .icon {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .summary-card {
+    padding: 1px;
+    min-width: unset;      /* full width stacking */
+  }
+
+  .card-header {
+    flex-direction: column; /* stack icon + title on very small screens */
+    gap: 4px;
+  }
+
+  .summary-card h2 {
+    font-size: 18px;
+  }
+
+  .icon {
+    font-size: 18px;
+  }
+}

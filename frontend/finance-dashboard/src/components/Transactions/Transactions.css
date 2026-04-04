@@ -1,0 +1,252 @@
+.transactions {
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    font-size: 16px;
+}
+
+/* TITLE */
+.transactions h3 {
+  margin-bottom: 15px;
+   font-size: 22px;     /* 🔥 bigger title */
+  font-weight: 700;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+    font-size: 15px;     /* 🔥 increased */
+justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+.left-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.export-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+.controls input,
+.controls select {
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+
+}
+
+/* FORM */
+.form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 600;
+
+}
+
+.form input,
+.form select {
+  padding: 10px 12px;
+    font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+
+}
+
+.form button {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* HEADER (IMPORTANT LIKE IMAGE) */
+thead {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+th {
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+
+}
+
+td {
+   padding: 14px;
+  font-size: 18px;  
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ROW HOVER */
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* TYPE COLORS */
+td span.income {
+  color: #22c55e;
+   font-size: 15px;
+  font-weight: 700;
+}
+
+td span.expense {
+  color: #ef4444;
+   font-size: 15px;
+  font-weight: 700;
+}
+
+/* BUTTONS */
+td button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin: 0 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+td button:first-child {
+  background: #22c55e;
+  color: white;
+}
+
+td button:last-child {
+  background: #ef4444;
+  color: white;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  color: #64748b;
+  font-size: 16px;
+}
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
+}
+
+.empty-state h4 {
+  margin-bottom: 10px;
+  color: #334155;
+}
+
+.empty-state button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #6366f1;
+  color: white;
+  cursor: pointer;
+}
+
+.empty-state button:hover {
+  background: #4f46e5;
+}
+/* RESPONSIVE RULES */
+@media (max-width: 900px) {
+  .transactions {
+    padding: 16px;
+    font-size: 15px;
+  }
+
+  .transactions h3 {
+    font-size: 20px;
+  }
+
+  .controls input,
+  .controls select,
+  .form input,
+  .form select {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  td {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  td span.income,
+  td span.expense {
+    font-size: 14px;
+  }
+
+  td button {
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .transactions {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .controls,
+  .form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .controls input,
+  .controls select,
+  .form input,
+  .form select,
+  .form button {
+    width: 90%;
+  }
+
+  td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  td span.income,
+  td span.expense {
+    font-size: 13px;
+  }
+
+  td button {
+    font-size: 12px;
+    padding: 4px 6px;
+    margin: 2px 0;
+  }
+}

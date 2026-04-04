@@ -1,0 +1,203 @@
+ body {
+  overflow-x: hidden;   /* ❌ disable left-right scroll */
+  overflow-y: auto;     /* ✅ allow top-bottom scroll */
+}
+ .dashboard {
+  padding: 24px;
+  align-items: center;
+  
+}
+
+
+/* TOP CARDS */
+.cards {
+  display: flex;
+ 
+  justify-content: center;   /* 🔥 centers horizontally */
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;           /* responsive */
+  margin: 20px 0;
+}
+
+.cards > div {
+  flex: 1;
+}
+
+/* CHART + INSIGHTS */
+.charts-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: stretch;   /* ✅ FIX */
+  overflow: hidden;       /* ✅ FIX */
+}
+
+/* LEFT BIG */
+.charts-row > :first-child {
+  flex: 2;
+}
+
+/* RIGHT SMALL */
+.charts-row > :last-child {
+  flex: 1;
+}
+
+/* CARD STYLE */
+.cards > div,
+.charts-row > div,
+.transactions {
+  background: #f8fafc;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+.dark {
+  background: #0f172a;
+  color: white;
+}
+/* Dark mode */
+body.dark h4 {
+  color: #f1f5f9; /* white */
+}
+.dark .summary-card,
+.dark .chart-card,
+.dark .transactions {
+  background: #1e293b;
+  color: white;
+}
+
+.dark {
+  background: #0f172a;
+  color: white;
+}
+
+.dark .summary-card,
+.dark .chart-card,
+.dark .transactions {
+  background: #1e293b;
+  color: white;
+} 
+/* DARK MODE BASE */
+body.dark {
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+/* HEADER DARK */
+body.dark .header {
+  background: linear-gradient(90deg, #1e293b, #334155);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* DROPDOWN */
+body.dark .role-select {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+/* AVATAR */
+body.dark .avatar {
+  background: #1e293b;
+  color: #a5b4fc;
+}
+
+/* BUTTON */
+body.dark .header button {
+  background: #475569;
+}
+
+/* CARDS / SECTIONS */
+body.dark .summary-card,
+body.dark .transactions,
+body.dark .charts-row > div {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+/* TABLE */
+body.dark table {
+  background: #1e293b;
+}
+
+body.dark td {
+  border-color: #334155;
+}
+
+body.dark tbody tr:hover {
+  background: #334155;
+}
+body.dark .transactions {
+  background: #1e293b;
+  color: white;
+}
+body.dark .charts-row > div {
+  background: #0f172a;   /* 🔥 deep black */
+  color: #f1f5f9;
+}
+
+/* .export-btn {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  opacity: 0.9;
+} */
+/* HOVER EFFECT (optional) */
+.cards > div:hover,
+.charts-row > div:hover,
+.transactions:hover {
+  transform: translateY(-2px);
+  transition: 0.2s;
+}
+.balance-card {
+  border-left: 5px solid #6366f1;
+}
+
+.income-card {
+  border-left: 5px solid #22c55e;
+}
+
+.expense-card {
+  border-left: 5px solid #ef4444;
+}
+
+
+
+/* Medium devices (tablet) */
+@media (max-width: 900px) {
+  .cards,
+  .charts-row {
+    flex-direction: column;
+  }
+
+  .cards > div,
+  .charts-row > div {
+    width: 100%;
+  }
+}
+
+/* Small devices (mobile) */
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 16px;
+  }
+
+  .cards {
+    gap: 12px;
+  }
+
+  .charts-row {
+    gap: 12px;
+  }
+
+  .cards > div,
+  .charts-row > div {
+    padding: 16px;
+    min-width: unset; /* allows full width on mobile */
+  }
+}
