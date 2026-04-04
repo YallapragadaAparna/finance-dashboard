@@ -1,174 +1,14 @@
-// // import React, { useState } from "react";
-// // import "./Transactions.css";
-
-// // function Transactions({ data, role, filter, setFilter, addTransaction, setTransactions }) {
-// //   const [search, setSearch] = useState("");
-// //   const [editIndex, setEditIndex] = useState(null);
-
-// //   const [form, setForm] = useState({
-// //     date: "",
-// //     amount: "",
-// //     category: "",
-// //     type: "Income"
-// //   });
-
-// //   // ✅ Filter
-// //   const filtered = data
-// //     .filter((t) =>
-// //       t.category.toLowerCase().includes(search.toLowerCase())
-// //     )
-// //     .filter((t) => (filter === "All" ? true : t.type === filter));
-
-// //   const handleChange = (e) => {
-// //     setForm({ ...form, [e.target.name]: e.target.value });
-// //   };
-
-// //   // ✅ Add / Update
-// //   const handleAdd = () => {
-// //     if (!form.date || !form.amount || !form.category) {
-// //       alert("Please fill all fields");
-// //       return;
-// //     }
-
-// //     const newTransaction = {
-// //       ...form,
-// //       amount: Number(form.amount)
-// //     };
-
-// //     if (editIndex !== null) {
-// //       // 🔁 Update
-// //       const updated = [...data];
-// //       updated[editIndex] = newTransaction;
-// //       setTransactions(updated);
-// //       setEditIndex(null);
-// //     } else {
-// //       // ➕ Add
-// //       addTransaction(newTransaction);
-// //     }
-
-// //     // Reset form
-// //     setForm({
-// //       date: "",
-// //       amount: "",
-// //       category: "",
-// //       type: "Income"
-// //     });
-// //   };
-
-// //   // ❌ Delete
-// //   const handleDelete = (index) => {
-// //     const updated = data.filter((_, i) => i !== index);
-// //     setTransactions(updated);
-// //   };
-
-// //   // ✏️ Edit
-// //   const handleEdit = (index) => {
-// //     setForm(data[index]);
-// //     setEditIndex(index);
-// //   };
-
-// //   return (
-// //     <div className="transactions">
-// //       <h3>Transactions</h3>
-
-// //       {/* Controls */}
-// //       <div className="controls">
-// //         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-// //           <option>All</option>
-// //           <option>Income</option>
-// //           <option>Expense</option>
-// //         </select>
-
-// //         <input
-// //           type="text"
-// //           placeholder="Search category..."
-// //           onChange={(e) => setSearch(e.target.value)}
-// //         />
-// //       </div>
-
-// //       {/* Admin Form */}
-// //       {role === "Admin" && (
-// //         <div className="form">
-// //           <input type="date" name="date" value={form.date} onChange={handleChange} />
-
-// //           <input
-// //             type="number"
-// //             name="amount"
-// //             placeholder="Amount"
-// //             value={form.amount}
-// //             onChange={handleChange}
-// //           />
-
-// //           <input
-// //             type="text"
-// //             name="category"
-// //             placeholder="Category"
-// //             value={form.category}
-// //             onChange={handleChange}
-// //           />
-
-// //           <select name="type" value={form.type} onChange={handleChange}>
-// //             <option value="Income">Income</option>
-// //             <option value="Expense">Expense</option>
-// //           </select>
-
-// //           <button onClick={handleAdd}>
-// //             {editIndex !== null ? " 🔁 Update" : "✚  Add"}
-// //           </button>
-// //         </div>
-// //       )}
-
-// //       {/* Table */}
-// //       {filtered.length === 0 ? (
-// //         <p className="empty">No transactions found</p>
-// //       ) : (
-// //         <table>
-// //           <thead>
-// //             <tr>
-// //               <th>Date</th>
-// //               <th>Amount</th>
-// //               <th>Category</th>
-// //               <th>Type</th>
-// //               {role === "Admin" && <th>Actions</th>}
-// //             </tr>
-// //           </thead>
-
-// //           <tbody>
-// //             {filtered.map((t, i) => (
-// //               <tr key={i}>
-// //                 <td>{t.date}</td>
-// //                 <td>₹ {t.amount}</td>
-// //                 <td>{t.category}</td>
-
-// //                 {/* <td style={{ color: t.type === "Income" ? "green" : "red" }}>
-// //                   {t.type}
-// //                 </td> */}
-// //                 <td>
-// //   <span className={t.type === "Income" ? "income" : "expense"}>
-// //     {t.type}
-// //   </span>
-// // </td>
-
-// //                 {role === "Admin" && (
-// //                   <td>
-// //                     <button onClick={() => handleEdit(i)}>✏️ Edit</button>
-// //                     <button onClick={() => handleDelete(i)}>🗑️ Delete</button>
-// //                   </td>
-// //                 )}
-// //               </tr>
-// //             ))}
-// //           </tbody>
-// //         </table>
-// //       )}
-// //     </div>
-// //   );
-// // }
-
-// // export default Transactions;
 // import React, { useState } from "react";
 // import "./Transactions.css";
 
-// function Transactions({ data, role, filter, setFilter, addTransaction, setTransactions }) {
+// function Transactions({
+//   data,
+//   role,
+//   filter,
+//   setFilter,
+//   addTransaction,
+//   setTransactions
+// }) {
 //   const [search, setSearch] = useState("");
 //   const [editIndex, setEditIndex] = useState(null);
 
@@ -179,18 +19,41 @@
 //     type: "Income"
 //   });
 
-//   // ✅ Filter
+//   // ✅ FILTER
 //   const filtered = data
 //     .filter((t) =>
 //       t.category.toLowerCase().includes(search.toLowerCase())
 //     )
 //     .filter((t) => (filter === "All" ? true : t.type === filter));
 
+//   // ✅ EXPORT CSV (FIXED)
+//   const exportCSV = () => {
+//     const rows = [
+//       ["Date", "Amount", "Category", "Type"],
+//       ...filtered.map((t) => [
+//         `="${new Date(t.date).toLocaleDateString("en-GB")}"`, // Excel safe
+//         t.amount,
+//         t.category,
+//         t.type
+//       ])
+//     ];
+
+//     const csvContent =
+//       "data:text/csv;charset=utf-8," +
+//       rows.map((e) => e.join(",")).join("\n");
+
+//     const link = document.createElement("a");
+//     link.href = encodeURI(csvContent);
+//     link.download = "transactions.csv";
+//     link.click();
+//   };
+
+//   // ✅ HANDLE INPUT
 //   const handleChange = (e) => {
 //     setForm({ ...form, [e.target.name]: e.target.value });
 //   };
 
-//   // ✅ Add / Update
+//   // ✅ ADD / UPDATE
 //   const handleAdd = () => {
 //     if (!form.date || !form.amount || !form.category) {
 //       alert("Please fill all fields");
@@ -203,17 +66,14 @@
 //     };
 
 //     if (editIndex !== null) {
-//       // 🔁 Update
 //       const updated = [...data];
 //       updated[editIndex] = newTransaction;
 //       setTransactions(updated);
 //       setEditIndex(null);
 //     } else {
-//       // ➕ Add
 //       addTransaction(newTransaction);
 //     }
 
-//     // Reset form
 //     setForm({
 //       date: "",
 //       amount: "",
@@ -222,13 +82,13 @@
 //     });
 //   };
 
-//   // ❌ Delete
+//   // ❌ DELETE
 //   const handleDelete = (index) => {
 //     const updated = data.filter((_, i) => i !== index);
 //     setTransactions(updated);
 //   };
 
-//   // ✏️ Edit
+//   // ✏️ EDIT
 //   const handleEdit = (index) => {
 //     setForm(data[index]);
 //     setEditIndex(index);
@@ -238,27 +98,41 @@
 //     <div className="transactions">
 //       <h3>Transactions</h3>
 
-//       {/* Controls */}
+//       {/* CONTROLS */}
 //       <div className="controls">
-//         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-//           <option>All</option>
-//           <option>Income</option>
-//           <option>Expense</option>
-//         </select>
+//         <div className="left-controls">
+//           <select
+//             value={filter}
+//             onChange={(e) => setFilter(e.target.value)}
+//           >
+//             <option>All</option>
+//             <option>Income</option>
+//             <option>Expense</option>
+//           </select>
 
-//         <input
-//           type="text"
-//           placeholder="Search category..."
-//           onChange={(e) => setSearch(e.target.value)}
-//         />
-        
+//           <input
+//             type="text"
+//             placeholder="Search category..."
+//             value={search}
+//             onChange={(e) => setSearch(e.target.value)}
+//           />
+//         </div>
+
+//         {/* RIGHT SIDE BUTTON */}
+//         <button onClick={exportCSV} className="export-btn">
+//           ⬇ Export CSV
+//         </button>
 //       </div>
-       
 
-//       {/* Admin Form */}
+//       {/* ADMIN FORM */}
 //       {role === "Admin" && (
 //         <div className="form">
-//           <input type="date" name="date" value={form.date} onChange={handleChange} />
+//           <input
+//             type="date"
+//             name="date"
+//             value={form.date}
+//             onChange={handleChange}
+//           />
 
 //           <input
 //             type="number"
@@ -276,18 +150,22 @@
 //             onChange={handleChange}
 //           />
 
-//           <select name="type" value={form.type} onChange={handleChange}>
+//           <select
+//             name="type"
+//             value={form.type}
+//             onChange={handleChange}
+//           >
 //             <option value="Income">Income</option>
 //             <option value="Expense">Expense</option>
 //           </select>
 
 //           <button onClick={handleAdd}>
-//             {editIndex !== null ? " 🔁 Update" : "✚  Add"}
+//             {editIndex !== null ? "🔁 Update" : "✚ Add"}
 //           </button>
 //         </div>
 //       )}
 
-//       {/* Table */}
+//       {/* TABLE */}
 //       {filtered.length === 0 ? (
 //         <p className="empty">No transactions found</p>
 //       ) : (
@@ -309,19 +187,24 @@
 //                 <td>₹ {t.amount}</td>
 //                 <td>{t.category}</td>
 
-//                 {/* <td style={{ color: t.type === "Income" ? "green" : "red" }}>
-//                   {t.type}
-//                 </td> */}
 //                 <td>
-//   <span className={t.type === "Income" ? "income" : "expense"}>
-//     {t.type}
-//   </span>
-// </td>
+//                   <span
+//                     className={
+//                       t.type === "Income" ? "income" : "expense"
+//                     }
+//                   >
+//                     {t.type}
+//                   </span>
+//                 </td>
 
 //                 {role === "Admin" && (
 //                   <td>
-//                     <button onClick={() => handleEdit(i)}>✏️ Edit</button>
-//                     <button onClick={() => handleDelete(i)}>🗑️ Delete</button>
+//                     <button onClick={() => handleEdit(i)}>
+//                       ✏️ Edit
+//                     </button>
+//                     <button onClick={() => handleDelete(i)}>
+//                       🗑️ Delete
+//                     </button>
 //                   </td>
 //                 )}
 //               </tr>
@@ -362,12 +245,12 @@ function Transactions({
     )
     .filter((t) => (filter === "All" ? true : t.type === filter));
 
-  // ✅ EXPORT CSV (FIXED)
+  // ✅ EXPORT CSV
   const exportCSV = () => {
     const rows = [
       ["Date", "Amount", "Category", "Type"],
       ...filtered.map((t) => [
-        `="${new Date(t.date).toLocaleDateString("en-GB")}"`, // Excel safe
+        `="${new Date(t.date).toLocaleDateString("en-GB")}"`,
         t.amount,
         t.category,
         t.type
@@ -384,7 +267,7 @@ function Transactions({
     link.click();
   };
 
-  // ✅ HANDLE INPUT
+  // ✅ INPUT CHANGE
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -454,7 +337,6 @@ function Transactions({
           />
         </div>
 
-        {/* RIGHT SIDE BUTTON */}
         <button onClick={exportCSV} className="export-btn">
           ⬇ Export CSV
         </button>
@@ -501,9 +383,27 @@ function Transactions({
         </div>
       )}
 
-      {/* TABLE */}
+      {/* TABLE / EMPTY STATE */}
       {filtered.length === 0 ? (
-        <p className="empty">No transactions found</p>
+        <div className="empty-state">
+          <h4>📭 No Transactions Found</h4>
+
+          {data.length === 0 ? (
+            <p>Start by adding your first transaction</p>
+          ) : (
+            <p>Try changing filters or search</p>
+          )}
+
+          {role === "Admin" && data.length === 0 && (
+            <button
+              onClick={() =>
+                document.querySelector(".form input")?.focus()
+              }
+            >
+              ➕ Add Transaction
+            </button>
+          )}
+        </div>
       ) : (
         <table>
           <thead>
