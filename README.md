@@ -1,4 +1,5 @@
 # finance-dashboard
+LiveLink: https://finance-dashboard-zio1.onrender.com
 #### 📊 Finance Dashboard
 📌 Overview
 
@@ -32,7 +33,7 @@ Storage: Browser Local Storage
 Follow these steps to run the project locally:
 
 1️⃣ Clone the Repository
-git clone https://github.com/your-username/finance-dashboard.git
+git clone https://github.com/YallapragadaAparna/finance-dashboard.git
 2️⃣ Navigate to Project Folder
 cd finance-dashboard
 3️⃣ Install Dependencies
