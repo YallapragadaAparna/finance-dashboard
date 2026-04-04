@@ -184,7 +184,7 @@ body.dark .charts-row > div {
 /* Small devices (mobile) */
 @media (max-width: 600px) {
   .dashboard {
-    padding: 16px;
+    padding: 1px;
   }
 
   .cards {
